@@ -1,0 +1,77 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.htm" %}
+{% block title %}Posts{% endblock %}
+{% block body %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header" style="background-color: #ecf0f5;">
+    <h1>
+      Enquiries
+      <small>enquiry info</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="{{ url_for('home.homepage') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="{{ url_for('home.admin_dashboard') }}">Dashboard</a></li>
+      <li class="active">students</li>
+    </ol>
+    <br>
+  </section>
+
+  <!-- Main content -->
+  <section class="content container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            {% if posts %}
+            <div class="box-body no-padding">
+                <div class="blue">
+                    {{ utils.flashed_messages() }}
+                </div>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Enquiry</th>
+                  <th>Response</th>
+                  <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                  {% for post in posts %}
+                      <tr>
+                        <td> {{ post.id}}</td>
+                        <td><a href="{{url_for('post.edit_enquiry', id=post.id)}}">{{ post.enquiry}}</a></td>
+                        <td> {{ post.response}}</td>
+                        </td>
+                        <td>
+                          <a style="color: #dd4b39" href="{{ url_for('admin.delete_post', id=post.id) }}" >
+                            <i class="fa fa-user-times"></i> Delete
+                          </a>
+                        </td>
+                      </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box-header -->
+          <div style="text-align: center">
+          {% else %}
+              <h3> No enquiries have been posted. </h3>
+              <hr class="intro-divider">
+          {% endif %}
+            <a href="{{ url_for('post.send_enquiry') }}" class="btn btn-default btn-success btn-lg">
+              <i class="fa fa-plus"></i>
+              Post Enquiry
+            </a>
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+</div>
+  {% endblock %}
